@@ -18,18 +18,21 @@
     "README.md",
     "tools/build_index.py",
     "tools/check_db.py",
+    "tools/check_glossary.py",
     "tools/check_package.mjs",
     "tools/check_queries.mjs",
+    "tools/check_russian.mjs",
     "tools/crawl.py",
     "tools/crawl_bpapi.py",
     "tools/crawl_cpp_core.py",
     "tools/crawl_cppapi.py",
     "tools/crawl_pyapi.py",
+    "tools/dbpaths.py",
     "tools/epic.py",
     "tools/fetch_cpp_priority.py",
     "tools/fix_guide_categories.py",
-    "tools/dbpaths.py",
-    "tools/mdconv.py"
+    "tools/mdconv.py",
+    "tools/topup_glossary.py"
   ],
   "engines": {
     "node": ">=20"
