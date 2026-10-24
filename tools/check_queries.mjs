@@ -25,7 +25,10 @@ if (!st.ready) {
 console.log(`base: ${st.root}`);
 console.log(`entries: ${st.total} ${JSON.stringify(st.byKind)}\n`);
 
-// [query, kind filter, substring the top title must contain]
+// [query, kind filter, substring the top title must contain].
+// All English: the corpus is English-only and the plugin does not translate,
+// so the agent is expected to translate before calling. Language behaviour is
+// covered separately by check_language.mjs.
 const CASES = [
   ['AActor', 'cppapi', 'AActor'],
   ['UObject', 'cppapi', 'UObject'],
@@ -34,8 +37,9 @@ const CASES = [
   ['Set Actor Location', 'bpapi', 'Set Actor Location'],
   ['Spawn Actor from Class', 'bpapi', 'Spawn Actor'],
   ['MaterialEditingLibrary', 'pyapi', 'MaterialEditingLibrary'],
-  ['как создать переменную в блюпринте', null, 'Variable'],
-  ['как сохранить игру', null, 'Save'],
+  ['create material', null, 'Material'],
+  ['save game', null, 'Save'],
+  ['niagara', null, 'Niagara'],
 ];
 
 let failed = 0;

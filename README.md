@@ -56,24 +56,33 @@ is already useful — start with `pyapi`, then add what you need.
 **98 440 entries total**, about 324 MB on disk and 70 MB of index.
 Everything is Unreal Engine **5.8** as published on `dev.epicgames.com`.
 
-## Languages
+## Language
 
-The corpus is **English only** — that is how Epic publishes it.
+The corpus is **English only** — that is how Epic publishes it — and the plugin
+does **no translation at all**.
 
-The plugin understands **two languages of query**:
+That is deliberate. The agent already knows what language the user wrote in and
+can translate better than any fixed glossary could: a dictionary covering one
+language out of many was partial by construction, and it produced silently wrong
+answers rather than clear failures.
 
-| Query language | How it works |
+The contract, which lives in the tool description the model reads every turn:
+
+| Who | Responsibility |
 |---|---|
-| **English** | matched directly against the corpus |
-| **Russian** | mapped to English through a built-in glossary of ~250 Unreal Engine terms |
+| **Agent** | understand the question in any language, translate it to English before searching, answer in the user's language |
+| **Plugin** | retrieve from an English corpus, nothing else |
 
 ```
-"how do I cast to another blueprint class"   → Cast To Class
-"как привести к классу блюпринт"             → Cast To Class
+User (Russian):  «как создать материал»
+Agent translates: "create material"            -> [ue_db_search]
+Agent answers:    отвечает по-русски, используя найденное
 ```
 
-Both return the same result. Other languages are not supported — a query in
-another language is matched literally, so it will usually return nothing.
+A query containing non-Latin characters is **rejected with an explicit error**
+rather than returning an empty list — because an empty list reads as "Epic
+documented nothing about this", which is wrong and would send the agent
+searching elsewhere. The error tells the agent to translate and retry.
 
 ## Install
 
