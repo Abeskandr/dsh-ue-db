@@ -85,6 +85,20 @@ Cloudflare on `dev.epicgames.com` is bypassed with [cloudscraper], which imitate
 a browser TLS fingerprint. Plain Node, `curl` and `urllib` receive 403 — that is
 why the network layer is Python.
 
+## Health checks
+
+Both are cheap enough to run after any crawl:
+
+```bash
+python tools/check_kb.py --base <dir> --full   # every entry opens
+node   tools/check_queries.mjs <dir>           # 9 representative queries
+node   tools/check_package.mjs                 # every tool ships in the tarball
+```
+
+`check_kb.py` exists because two path bugs during development were invisible:
+search kept working and the index stayed valid while `ue_kb_get` silently
+returned "file missing". A sampled read is not enough — use `--full`.
+
 ## Requirements
 
 - DSH `>= 0.2.0-rc.1`
