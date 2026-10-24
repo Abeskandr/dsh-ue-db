@@ -40,6 +40,25 @@ def log(m):
 
 
 def fetch(url, timeout=45, retries=3):
+    """Fetch a Sphinx page.
+
+    Plain urllib used to be enough here, but Epic now answers it with a stall
+    or a Cloudflare challenge. cloudscraper is tried first and urllib remains
+    as a fallback for environments without it.
+    """
+    try:
+        import cloudscraper
+        s = cloudscraper.create_scraper(browser={"browser": "chrome", "platform": "windows", "mobile": False})
+        for a in range(retries):
+            try:
+                r = s.get(url, timeout=timeout)
+                if r.status_code == 200 and r.text:
+                    return r.text
+            except Exception:
+                time.sleep(1.5 * (a + 1))
+    except ImportError:
+        pass
+
     for a in range(retries):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": UA})
@@ -55,7 +74,12 @@ def discover_classes():
     if os.path.exists(cache):
         return json.load(open(cache, encoding="utf-8"))
     log("[pyapi] discovering class list from genindex...")
-    html = fetch(f"{BASE}/genindex.html")
+    # The Sphinx genindex stopped listing classes (it returns an empty page,
+    # 0 links). The documentation root does list them, so try it first and
+    # fall back to genindex for older layouts.
+    html = fetch(f"{BASE}/")
+    if not html or not re.search(r'href="class/[A-Za-z0-9_]+\.html"', html):
+        html = fetch(f"{BASE}/genindex.html")
     if not html:
         log("FAILED genindex")
         return []
