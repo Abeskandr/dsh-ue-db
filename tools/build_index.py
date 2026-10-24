@@ -121,9 +121,16 @@ def collect_guides():
 def collect_pyapi():
     out = []
     idx = load_json(os.path.join(RAW, "pyapi-dbv-index.json"))
-    d = os.path.join(RAW, "pyapi")
-    if not os.path.isdir(d):
+    # Older layouts kept the classes in raw/pyapi; a crawler run keeps them in
+    # pyapi/. Accept whichever exists, and record the path that actually works.
+    d = None
+    for cand in (os.path.join(RAW, "pyapi"), os.path.join(KB_BASE, "pyapi")):
+        if os.path.isdir(cand) and os.listdir(cand):
+            d = cand
+            break
+    if d is None:
         return out
+    rel_dir = "raw/pyapi" if d == os.path.join(RAW, "pyapi") else "pyapi"
     for fn in os.listdir(d):
         if not fn.endswith(".md"):
             continue
@@ -140,7 +147,7 @@ def collect_pyapi():
         out.append({
             "name": name,
             "title": title,
-            "file": os.path.join("pyapi", fn),
+            "file": os.path.join(rel_dir, fn).replace(os.sep, "/"),
             "url": f"https://dev.epicgames.com/documentation/en-us/unreal-engine/python-api/class/{name}.html",
             "category": "python-api",
             "size": len(body),
