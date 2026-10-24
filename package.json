@@ -11,21 +11,22 @@
   "files": [
     "lib/index.js",
     "lib/kb.js",
-    "lib/update.js",
     "lib/paths.js",
+    "lib/update.js",
     "cordis.patch.yml",
-    "tools/epic.py",
-    "tools/mdconv.py",
-    "tools/kbpaths.py",
+    "tools/build_index.py",
+    "tools/check_kb.py",
+    "tools/check_queries.mjs",
     "tools/crawl.py",
     "tools/crawl_bpapi.py",
-    "tools/crawl_pyapi.py",
+    "tools/crawl_cpp_core.py",
     "tools/crawl_cppapi.py",
-    "tools/build_index.py",
-    "README.md",
+    "tools/crawl_pyapi.py",
+    "tools/epic.py",
+    "tools/kbpaths.py",
+    "tools/mdconv.py",
     "LICENSE",
-    "tools/check_kb.py",
-    "tools/check_queries.mjs"
+    "README.md"
   ],
   "engines": {
     "node": ">=20"
