@@ -37,9 +37,8 @@ PRIORITY = [
     "Runtime/CoreUObject/UFunction",
     "Runtime/CoreUObject/UProperty",
     "Runtime/CoreUObject/FSoftObjectPtr",
-    "Runtime/CoreUObject/FSoftClassPtr",
-    "Runtime/CoreUObject/TWeakObjectPtr",
-    "Runtime/CoreUObject/TSoftObjectPtr",
+    "Runtime/Core/TWeakObjectPtr",
+    "Runtime/Core/TSoftObjectPtr",
     # Math / core value types
     # Engine value types that DO live under Runtime/Engine
     "Runtime/Engine/FHitResult",
@@ -62,7 +61,6 @@ PRIORITY = [
     "Runtime/Engine/AGameStateBase",
     "Runtime/Engine/AHUD",
     "Runtime/Engine/APlayerState",
-    "Runtime/Engine/UPlayerState",
     "Runtime/Engine/UGameInstance",
     "Runtime/Engine/UGameplayStatics",
     "Runtime/Engine/UBlueprintFunctionLibrary",
@@ -92,8 +90,8 @@ PRIORITY = [
     "Runtime/Engine/UBlueprint",
     "Runtime/Engine/UWorldSubsystem",
     "Runtime/Engine/UGameInstanceSubsystem",
-    "Runtime/Engine/UUserWidget",
-    "Runtime/Engine/UWidgetBlueprintLibrary",
+    "Runtime/UMG/UUserWidget",
+    "Runtime/UMG/UWidgetBlueprintLibrary",
     "Runtime/Engine/UCameraComponent",
     "Runtime/Engine/USpringArmComponent",
     "Runtime/Engine/USoundBase",
@@ -101,14 +99,13 @@ PRIORITY = [
     "Runtime/Engine/UParticleSystem",
     "Runtime/Engine/ULightComponent",
     "Runtime/Engine/UPhysicsHandleComponent",
-    "Runtime/Engine/UCanvasPanelSlot",
+    "Runtime/UMG/UCanvasPanelSlot",
     "Runtime/UMG/UUserWidget",
     # AI / navigation
     "Runtime/AIModule/AAIController",
     "Runtime/AIModule/UBehaviorTreeComponent",
     "Runtime/NavigationSystem/UNavigationSystemV1",
     # Rendering
-    "Runtime/RenderCore/FRenderCommand",
     "Runtime/RHI/FRHIResource",
 ]
 
