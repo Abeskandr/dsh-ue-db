@@ -23,7 +23,9 @@
     "tools/crawl_cppapi.py",
     "tools/build_index.py",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "tools/check_kb.py",
+    "tools/check_queries.mjs"
   ],
   "engines": {
     "node": ">=20"
