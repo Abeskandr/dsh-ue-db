@@ -157,24 +157,50 @@ def collect_pyapi():
 
 
 def collect_bpapi():
+    """Blueprint API nodes, scanned from disk.
+
+    The crawler flushes its index periodically, so an interrupted or killed run
+    leaves files on disk that never made it into bpapi-index.json (134 in the
+    2026-10-24 run). The filesystem is the source of truth; the crawler index
+    only supplies the human-readable title and URL.
+    """
     out = []
-    idx = load_json(os.path.join(RAW, "bpapi-index.json"))
-    if idx and idx.get("pages"):
-        for key, m in idx["pages"].items():
-            f = os.path.join(RAW, "bpapi", m["file"])
-            body = ""
-            if os.path.exists(f):
-                body = open(f, encoding="utf-8", errors="replace").read()
-            out.append({
-                "path": key,
-                "title": m.get("title") or key,
-                # files stay under raw/, so the index carries that prefix
-                "file": os.path.join("raw", "bpapi", m["file"]),
-                "url": m.get("url") or "",
-                "category": "blueprint-api",
-                "size": len(body),
-                "terms": terms_of(m.get("title") or key, body),
-            })
+    idx = load_json(os.path.join(RAW, "bpapi-index.json")) or {}
+    meta = idx.get("pages") or {}
+    by_file = {m["file"]: m for m in meta.values() if m.get("file")}
+    d = os.path.join(RAW, "bpapi")
+    if not os.path.isdir(d):
+        return out
+
+    for fn in os.listdir(d):
+        if not fn.endswith(".md"):
+            continue
+        p = os.path.join(d, fn)
+        try:
+            body = open(p, encoding="utf-8", errors="replace").read()
+        except Exception:
+            continue
+        m = by_file.get(fn) or {}
+        # Recover the tree path from the filename when the crawler index is silent:
+        # safe() turned '/' into '__', so it is reversible.
+        key = m.get("path") or fn[:-3].replace("__", "/")
+        title = m.get("title")
+        if not title:
+            tm = re.match(r"#\s+(.+)", body)
+            title = tm.group(1).strip() if tm else key.split("/")[-1]
+        url = m.get("url") or (
+            "https://dev.epicgames.com/documentation/en-us/unreal-engine/BlueprintAPI/"
+            + key.replace(" ", "%20")
+        )
+        out.append({
+            "path": key,
+            "title": title,
+            "file": os.path.join("raw", "bpapi", fn),
+            "url": url,
+            "category": "blueprint-api",
+            "size": len(body),
+            "terms": terms_of(title, body),
+        })
     return out
 
 
