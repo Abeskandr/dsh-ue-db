@@ -53,18 +53,32 @@ def load_json(p):
 
 
 def collect_guides():
+    """Guides live under raw/guides; the index must point there.
+
+    A stale copy may also sit in <base>/guides from an older layout, so the
+    path is resolved against the filesystem rather than assumed.
+    """
     out = []
     idx = load_json(os.path.join(RAW, "guides-index.json"))
     if idx and idx.get("pages"):
         for slug, m in idx["pages"].items():
-            f = os.path.join(RAW, "guides", m["file"])
+            rel = m["file"]
+            for cand in (os.path.join("raw", "guides", rel),
+                         os.path.join("guides", rel)):
+                if os.path.exists(os.path.join(RAW, os.path.dirname(cand), os.path.basename(cand))) \
+                        or os.path.exists(os.path.join(KB_BASE, cand)):
+                    rel_out = cand
+                    break
+            else:
+                rel_out = os.path.join("raw", "guides", rel)
+            f = os.path.join(KB_BASE, rel_out)
             body = ""
             if os.path.exists(f):
                 body = open(f, encoding="utf-8", errors="replace").read()
             out.append({
                 "slug": slug,
                 "title": m.get("title") or slug,
-                "file": os.path.join("guides", m["file"]),
+                "file": rel_out,
                 "url": m.get("url") or "",
                 "category": m.get("category") or "",
                 "size": len(body),
