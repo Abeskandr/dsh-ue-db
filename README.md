@@ -13,12 +13,12 @@ Agent: [ue_kb_search] → Cast To … Class (with pin types)
 
 | Source | Entries | What it gives the agent |
 |---|---|---|
-| **Blueprint API** | ~51 900 nodes | Every node with its `Inputs`/`Outputs` table: pin type, name, description |
-| **C++ API** | ~24 200 classes | `AActor`, `UObject`, `UWorld` and the rest: header path, include line, full signature |
-| **Python API** | ~11 600 classes | `unreal.*` signatures, parameters, properties, inheritance |
-| **Guides** | ~3 650 pages | The whole Epic documentation, sorted into 36 sections: Gameplay, Animation, Niagara, UMG, PCG, Cinematics, Audio, … |
+| **Blueprint API** | 52 314 nodes | Every node with its `Inputs`/`Outputs` table: pin type, name, description |
+| **C++ API** | 30 841 classes | `AActor`, `UObject`, `UWorld` and the rest: header path, include line, full signature |
+| **Python API** | 11 642 classes | `unreal.*` signatures, parameters, properties, inheritance |
+| **Guides** | 3 643 pages | The whole Epic documentation, sorted into 36 sections: Gameplay, Animation, Niagara, UMG, PCG, Cinematics, Audio, … |
 
-**~91 300 entries total**, about 296 MB on disk and 65 MB of index.
+**98 440 entries total**, about 324 MB on disk and 70 MB of index.
 
 Everything is Unreal Engine **5.8** as published on `dev.epicgames.com`.
 
@@ -28,7 +28,7 @@ Everything is Unreal Engine **5.8** as published on `dev.epicgames.com`.
 dsh plugin --profile web add dsh-ue-kb
 ```
 
-Then download the corpus once (~230 MB, the repository does **not** ship it):
+Then download the corpus once (~324 MB, the repository does **not** ship it):
 
 ```bash
 python -m pip install cloudscraper
@@ -38,9 +38,22 @@ ue_kb_update            # or: ue_kb_update(what="bpapi")
 
 Restart DSH so the tools appear.
 
-**Why the corpus is not bundled:** it is ~230 MB of text. GitHub rejects files
+**Why the corpus is not bundled:** it is ~324 MB of text. GitHub rejects files
 over 100 MB and the git history would balloon. Downloading on first run also
 means you always get a corpus matching your engine version.
+
+**How long it takes.** Epic answers at roughly 4 requests/second before blocking
+the IP, so the first full download is measured in hours, not minutes. It is
+resumable: stop it whenever you like and call `ue_kb_update` again later — every
+run continues from where the previous one stopped, and nothing is re-downloaded.
+
+| Scope | Rough time |
+|---|---|
+| `pyapi` (plain HTTP, no Cloudflare) | ~15 min |
+| `guides` (3 600 pages) | ~45 min |
+| `bpapi` (52 000 nodes) | several hours |
+| `cppapi` (core modules) | ~2.5 h |
+| everything | run it overnight |
 
 ## Tools
 
@@ -57,7 +70,8 @@ Resolution order:
 
 1. `config.knowledgePath` in the plugin row — explicit path
 2. `DSH_UE_KB_ROOT` environment variable
-3. `~/.dsh/ue-kb` — default
+3. `<plugin>/data` when it holds an index — a local install that bundled the corpus
+4. `~/.dsh/ue-kb` — default for a fresh registry install
 
 ```yaml
 - id: ue-kb
@@ -73,11 +87,14 @@ Delete that directory and the corpus is gone; nothing is written elsewhere.
 Epic rate-limits aggressively — around 4 requests per second before the IP is
 blocked for 15–20 minutes. The crawlers pace themselves globally
 (`EPIC_MIN_INTERVAL`, default 0.35 s) and rotate the Cloudflare session on 403.
-A full Blueprint crawl takes hours; it resumes where it stopped.
+Each step logs its expected duration before starting, so a long run does not
+look like a hang.
 
 ```bash
 ue_kb_update(what="guides")    # guides only
 ue_kb_update(what="bpapi")     # Blueprint API only
+ue_kb_update(what="cppapi")    # C++ core modules only
+ue_kb_update(what="cppall")    # C++ including third-party plugins — many hours
 ue_kb_update(limit=200)        # trial run
 ```
 
