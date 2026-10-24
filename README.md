@@ -108,8 +108,11 @@ searching elsewhere. The error tells the agent to translate and retry.
 ## Install
 
 ```bash
-dsh plugin --profile web add dsh-ue-db
+dsh plugin --profile web add https://github.com/Abeskandr/dsh-ue-db
 ```
+
+That is the whole install — `dsh` forwards to `pnpm`, which clones the tagged
+source. The corpus is not in the repository and is downloaded on first use.
 
 Then, once:
 
@@ -117,8 +120,9 @@ Then, once:
 python -m pip install cloudscraper    # needed only for downloading
 ```
 
-and ask the agent to run `ue_db_update`. Restart DSH afterwards so the tools
-appear in the model's toolset.
+Ask the agent to run `ue_db_update`, then restart DSH so the tools appear in the
+model's toolset. The first download takes hours (see the note at the top); every
+step resumes, so it can be done across several sittings.
 
 ## Tools
 
