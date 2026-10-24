@@ -13,10 +13,12 @@ Agent: [ue_kb_search] → Cast To … Class (with pin types)
 
 | Source | Entries | What it gives the agent |
 |---|---|---|
-| **Blueprint API** | ~52 000 nodes | Every node with its `Inputs`/`Outputs` table: pin type, name, description |
+| **Blueprint API** | ~51 900 nodes | Every node with its `Inputs`/`Outputs` table: pin type, name, description |
+| **C++ API** | ~24 200 classes | `AActor`, `UObject`, `UWorld` and the rest: header path, include line, full signature |
 | **Python API** | ~11 600 classes | `unreal.*` signatures, parameters, properties, inheritance |
-| **Guides** | ~3 650 pages | The whole Epic documentation: Gameplay, Animation, Niagara, UMG, PCG, Cinematics, Audio, … |
-| **C++ API** | growing | `AActor`, `UObject` and the rest of the engine reference |
+| **Guides** | ~3 650 pages | The whole Epic documentation, sorted into 36 sections: Gameplay, Animation, Niagara, UMG, PCG, Cinematics, Audio, … |
+
+**~91 300 entries total**, about 296 MB on disk and 65 MB of index.
 
 Everything is Unreal Engine **5.8** as published on `dev.epicgames.com`.
 
