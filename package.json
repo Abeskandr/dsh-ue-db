@@ -49,11 +49,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/USERNAME/dsh-ue-db.git"
+    "url": "git+https://github.com/Abeskandr/dsh-ue-db.git"
   },
-  "homepage": "https://github.com/USERNAME/dsh-ue-db#readme",
+  "homepage": "https://github.com/Abeskandr/dsh-ue-db#readme",
   "bugs": {
-    "url": "https://github.com/USERNAME/dsh-ue-db/issues"
+    "url": "https://github.com/Abeskandr/dsh-ue-db/issues"
   },
   "os": [
     "win32",
