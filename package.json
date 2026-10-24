@@ -1,0 +1,72 @@
+{
+  "name": "dsh-ue-kb",
+  "version": "1.0.0",
+  "description": "Offline Unreal Engine 5.8 knowledge base for DeepSeek Harness: ~52k Blueprint API nodes with pin types, ~11.6k Python API classes, ~3.6k Epic guide pages and the C++ API, searchable without network access.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/kb.js",
+    "lib/update.js",
+    "lib/paths.js",
+    "cordis.patch.yml",
+    "tools/epic.py",
+    "tools/mdconv.py",
+    "tools/kbpaths.py",
+    "tools/crawl.py",
+    "tools/crawl_bpapi.py",
+    "tools/crawl_pyapi.py",
+    "tools/crawl_cppapi.py",
+    "tools/build_index.py",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "unreal-engine",
+    "unreal",
+    "blueprint",
+    "knowledge-base",
+    "offline-docs",
+    "rag"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/USERNAME/dsh-ue-kb.git"
+  },
+  "homepage": "https://github.com/USERNAME/dsh-ue-kb#readme",
+  "bugs": {
+    "url": "https://github.com/USERNAME/dsh-ue-kb/issues"
+  },
+  "os": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "^0.2.0-rc.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "cordis.patch.yml"
+    },
+    "engines": {
+      "dsh": ">=0.2.0-rc.1"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# The corpus is downloaded by the user, never committed.
+# It is ~230 MB of Epic documentation and is not ours to redistribute.
+data/
+.pydeps/
+node_modules/
+
+# Crawler scratch
+logs/
+*.log
+*.tmp
+__pycache__/
+*.pyc
+
+# Package artifacts
+*.tgz
