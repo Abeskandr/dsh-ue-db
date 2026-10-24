@@ -14,8 +14,11 @@
     "lib/paths.js",
     "lib/update.js",
     "cordis.patch.yml",
+    "LICENSE",
+    "README.md",
     "tools/build_index.py",
     "tools/check_kb.py",
+    "tools/check_package.mjs",
     "tools/check_queries.mjs",
     "tools/crawl.py",
     "tools/crawl_bpapi.py",
@@ -23,10 +26,10 @@
     "tools/crawl_cppapi.py",
     "tools/crawl_pyapi.py",
     "tools/epic.py",
+    "tools/fetch_cpp_priority.py",
+    "tools/fix_guide_categories.py",
     "tools/kbpaths.py",
-    "tools/mdconv.py",
-    "LICENSE",
-    "README.md"
+    "tools/mdconv.py"
   ],
   "engines": {
     "node": ">=20"
