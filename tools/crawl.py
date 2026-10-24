@@ -20,7 +20,7 @@ import time
 sys.path.insert(0, os.path.dirname(__file__))
 from epic import make_scraper, document_json, blocks_to_html, table_of_content
 from mdconv import html_to_text
-from kbpaths import base_from_argv, paths as kb_paths, ensure as kb_ensure
+from dbpaths import base_from_argv, paths as kb_paths, ensure as kb_ensure
 
 BASE = base_from_argv(sys.argv[1:])
 P = kb_paths(BASE)

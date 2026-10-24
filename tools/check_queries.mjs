@@ -2,20 +2,20 @@
 /**
  * Query smoke test for the knowledge base.
  *
- * Complements check_kb.py: that one verifies every file opens, this one verifies
+ * Complements check_db.py: that one verifies every file opens, this one verifies
  * that representative queries still resolve to the right kind of answer.
  *
  * Usage:  node tools/check_queries.mjs [<base-dir>]
  */
-import { Kb } from '../lib/kb.js';
+import { Db } from '../lib/db.js';
 import path from 'node:path';
 import os from 'node:os';
 
 const base = process.argv[2]
-  || process.env.DSH_UE_KB_ROOT
-  || path.join(os.homedir(), '.dsh', 'ue-kb');
+  || process.env.DSH_UE_DB_ROOT
+  || path.join(os.homedir(), '.dsh', 'ue-db');
 
-const kb = new Kb(base);
+const kb = new Db(base);
 const st = kb.status();
 if (!st.ready) {
   console.error(`FAIL: knowledge base not ready at ${st.root}: ${st.error}`);

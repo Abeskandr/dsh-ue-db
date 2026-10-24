@@ -13,7 +13,7 @@ Layout under it:
       guides/ pyapi/ bpapi/ cppapi/   final content the plugin reads
       index-ue.json    unified index
 
-Environment fallback: DSH_UE_KB_BASE.
+Environment fallback: DSH_UE_DB_BASE.
 """
 import argparse
 import os
@@ -22,13 +22,13 @@ import os
 def base_from_argv(argv=None, with_limit=False, with_threads=False):
     """Parse the common `--base [--limit N] [--threads N]` tail of a crawler CLI."""
     ap = argparse.ArgumentParser(add_help=False)
-    ap.add_argument("--base", default=os.environ.get("DSH_UE_KB_BASE") or ".")
+    ap.add_argument("--base", default=os.environ.get("DSH_UE_DB_BASE") or ".")
     args, _rest = ap.parse_known_args(argv)
     return os.path.abspath(args.base)
 
 
 def add_base_arg(parser):
-    parser.add_argument("--base", default=os.environ.get("DSH_UE_KB_BASE") or ".",
+    parser.add_argument("--base", default=os.environ.get("DSH_UE_DB_BASE") or ".",
                         help="Knowledge base root directory")
     return parser
 

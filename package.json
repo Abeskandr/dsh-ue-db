@@ -1,7 +1,7 @@
 {
-  "name": "dsh-ue-kb",
+  "name": "dsh-ue-db",
   "version": "1.0.0",
-  "description": "Offline Unreal Engine 5.8 knowledge base for DeepSeek Harness: ~52k Blueprint API nodes with pin types, ~11.6k Python API classes, ~3.6k Epic guide pages and the C++ API, searchable without network access.",
+  "description": "Offline Unreal Engine 5.8 database for DeepSeek Harness: 52k Blueprint API nodes with pin tables, 30k C++ API classes, 11.6k Python API classes and 3.6k Epic guide pages, searchable without network access. Corpus is downloaded on first use.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -10,14 +10,14 @@
   },
   "files": [
     "lib/index.js",
-    "lib/kb.js",
+    "lib/db.js",
     "lib/paths.js",
     "lib/update.js",
     "cordis.patch.yml",
     "LICENSE",
     "README.md",
     "tools/build_index.py",
-    "tools/check_kb.py",
+    "tools/check_db.py",
     "tools/check_package.mjs",
     "tools/check_queries.mjs",
     "tools/crawl.py",
@@ -28,7 +28,7 @@
     "tools/epic.py",
     "tools/fetch_cpp_priority.py",
     "tools/fix_guide_categories.py",
-    "tools/kbpaths.py",
+    "tools/dbpaths.py",
     "tools/mdconv.py"
   ],
   "engines": {
@@ -48,11 +48,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/USERNAME/dsh-ue-kb.git"
+    "url": "git+https://github.com/USERNAME/dsh-ue-db.git"
   },
-  "homepage": "https://github.com/USERNAME/dsh-ue-kb#readme",
+  "homepage": "https://github.com/USERNAME/dsh-ue-db#readme",
   "bugs": {
-    "url": "https://github.com/USERNAME/dsh-ue-kb/issues"
+    "url": "https://github.com/USERNAME/dsh-ue-db/issues"
   },
   "os": [
     "win32",

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Verify that the published tarball contains everything ue_kb_update needs.
+ * Verify that the published tarball contains everything ue_db_update needs.
  *
  * A script can exist in the repository but be missing from `files`, and the
  * failure only shows up on a fresh install — the tool silently skips the step

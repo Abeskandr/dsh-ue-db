@@ -18,7 +18,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(__file__))
 from mdconv import html_to_text
-from kbpaths import base_from_argv, paths as kb_paths, ensure as kb_ensure
+from dbpaths import base_from_argv, paths as kb_paths, ensure as kb_ensure
 
 KB_BASE = base_from_argv(sys.argv[1:])
 _P = kb_paths(KB_BASE)

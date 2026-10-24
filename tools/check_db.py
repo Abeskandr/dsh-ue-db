@@ -7,11 +7,11 @@ crawl, after moving directories, or before publishing.
 
 The path bugs found during development (guides and Python API pointing at
 directories that no longer existed) were invisible to search — the metadata was
-fine and only `ue_kb_get` failed. So the important part here is the exhaustive
+fine and only `ue_db_get` failed. So the important part here is the exhaustive
 read, not the query list.
 
-Usage:  python check_kb.py [--base <dir>] [--full]
-        --base   knowledge base root (default: DSH_UE_KB_BASE or .)
+Usage:  python check_db.py [--base <dir>] [--full]
+        --base   knowledge base root (default: DSH_UE_DB_BASE or .)
         --full   read every entry; default samples 500 per kind
 """
 import json
@@ -20,7 +20,7 @@ import random
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from kbpaths import base_from_argv
+from dbpaths import base_from_argv
 
 BASE = base_from_argv(sys.argv[1:])
 FULL = "--full" in sys.argv

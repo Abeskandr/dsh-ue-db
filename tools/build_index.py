@@ -15,7 +15,7 @@ import re
 import sys
 from collections import Counter
 
-from kbpaths import base_from_argv, paths as kb_paths, ensure as kb_ensure
+from dbpaths import base_from_argv, paths as kb_paths, ensure as kb_ensure
 
 KB_BASE = base_from_argv(sys.argv[1:])
 _P = kb_paths(KB_BASE)

@@ -1,4 +1,4 @@
 - insert:
-    - id: ue-kb
-      name: dsh-ue-kb
+    - id: ue-db
+      name: dsh-ue-db
       config: {}

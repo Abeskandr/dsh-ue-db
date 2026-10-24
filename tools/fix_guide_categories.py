@@ -12,7 +12,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from kbpaths import base_from_argv, paths as kb_paths
+from dbpaths import base_from_argv, paths as kb_paths
 
 KB_BASE = base_from_argv(sys.argv[1:])
 _P = kb_paths(KB_BASE)
