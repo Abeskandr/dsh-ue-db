@@ -123,6 +123,14 @@ def main():
                 if done_flag.is_set() and q.empty():
                     return
                 continue
+            # Check the cap BEFORE doing the work, not after. With six workers
+            # and a post-hoc check the queue keeps feeding until each in-flight
+            # item finishes, so `limit=2` downloaded thousands of pages.
+            with _lock:
+                if limit and _counter["pages"] >= limit:
+                    done_flag.set()
+                    q.task_done()
+                    return
             try:
                 doc, kids = fetch(path)
                 if doc is None:
@@ -168,7 +176,11 @@ def main():
             if limit and n >= limit:
                 done_flag.set()
 
-    ths = [threading.Thread(target=worker, daemon=True) for _ in range(6)]
+    # With a trial limit, never start more workers than there is work: each
+    # worker takes one item off the queue before the shared counter can be
+    # checked, so six workers overshoot a small cap.
+    workers = 6 if not limit else max(1, min(6, limit))
+    ths = [threading.Thread(target=worker, daemon=True) for _ in range(workers)]
     for t in ths:
         t.start()
     for t in ths:

@@ -52,8 +52,11 @@ def fetch(url, timeout=45, retries=3):
         for a in range(retries):
             try:
                 r = s.get(url, timeout=timeout)
-                if r.status_code == 200 and r.text:
-                    return r.text
+                if r.status_code == 200 and r.content:
+                    # Decode explicitly: requests/cloudscraper falls back to
+                    # latin-1 when no charset is declared, which turns the
+                    # Sphinx pilcrow into mojibake ("\u00c2\u00b6").
+                    return r.content.decode("utf-8", "replace")
             except Exception:
                 time.sleep(1.5 * (a + 1))
     except ImportError:
@@ -98,7 +101,10 @@ def extract_class(html):
     body = re.sub(r'<div class="related".*?</div>', "", body, flags=re.S)
     title_m = re.search(r"<h1>(.*?)</h1>", html, re.S)
     title = re.sub(r"<[^>]+>", "", title_m.group(1)).strip() if title_m else ""
-    return title, html_to_text(body)
+    # Sphinx appends a pilcrow anchor ("unreal.Actor¶") to every heading, so it
+    # has to be removed from the title and from the body headings too.
+    title = title.replace("\u00b6", "").strip()
+    return title, html_to_text(body).replace("\u00b6", "")
 
 
 def main():
