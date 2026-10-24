@@ -56,6 +56,27 @@ is already useful — start with `pyapi`, then add what you need.
 **98 440 entries total**, about 324 MB on disk and 70 MB of index.
 Everything is Unreal Engine **5.8** as published on `dev.epicgames.com`.
 
+## The agent is told to use it
+
+A tool description tells the model *what* a tool is. It does not reliably make
+the model *reach for it* — without guidance a model will happily answer an
+Unreal question from memory or go to the web while a complete offline corpus
+sits unused.
+
+So the plugin also contributes a **system-prompt section** (order 210, beside
+the other first-party tool guidance) that says, in effect: for any Unreal
+Engine question consult `ue_db_*` first, prefer it over web search and over
+recollection, and only fall back to the web when the database genuinely has no
+answer. The section is emitted only when the tool is actually visible in the
+caller's scope, so an agent without the tool is not nagged about it.
+
+```
+You:    «как сделать двойной прыжок?»
+Agent:  [ue_db_search] → JumpMaxCount …      ← not web_search, not memory
+```
+
+This is why you do not have to remind the agent in every conversation.
+
 ## Language
 
 The corpus is **English only** — that is how Epic publishes it — and the plugin
