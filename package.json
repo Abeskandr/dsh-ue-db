@@ -70,10 +70,16 @@
   },
   "dsh": {
     "bundle": {
-      "patch": "cordis.patch.yml"
+      "patch": "./cordis.patch.yml"
     },
     "engines": {
       "dsh": ">=0.2.0-rc.1"
+    },
+    "install": {
+      "preferred": "tarball",
+      "tarball": "https://codeload.github.com/Abeskandr/dsh-ue-db/tar.gz/refs/heads/main",
+      "zip": "https://codeload.github.com/Abeskandr/dsh-ue-db/zip/refs/heads/main",
+      "git": "https://github.com/Abeskandr/dsh-ue-db.git"
     }
   }
 }
